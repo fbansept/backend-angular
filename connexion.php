@@ -32,6 +32,7 @@ try{
         // Étape 2 : Créer le Payload (les données que vous voulez stocker)
         $payload = json_encode([
             'email' => $donneesFormulaire["email"],
+            'admin' => $utilisateur["admin"]
         ]);
 
         // Étape 3 : Encoder le Header et le Payload en base64Url
