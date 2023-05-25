@@ -7,6 +7,7 @@ $donneesFormulaire = json_decode($json, TRUE);
 
 try{
 
+
     include 'bdd.php';
 
     $requete = $bdd->prepare("SELECT * 
