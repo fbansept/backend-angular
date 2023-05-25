@@ -13,15 +13,17 @@ try{
 
         if($utilisateurConnecte['admin'] == 1) {
 
-            $requete = $bdd->prepare("INSERT INTO article (nom, contenu, date)
-                                        VALUES (:nom, :contenu,  NOW() )");
+            $requete = $bdd->prepare("UPDATE article 
+                                        SET nom = :nom, contenu = :contenu
+                                        WHERE id = :id");
 
             $requete->execute([
                 "nom" => $donneesFormulaire["nom"],
-                "contenu" => $donneesFormulaire["contenu"]
+                "contenu" => $donneesFormulaire["contenu"],
+                "id" => $donneesFormulaire["id"]
             ]);
 
-            echo '{"message" : "L\'article a été ajouté"}';
+            echo '{"message" : "L\'article a été modifié"}';
         } else {
             echo json_encode(["message" => "Vous n'avez pas les droits nécessaires"]);
         }

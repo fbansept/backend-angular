@@ -8,13 +8,17 @@ try{
 
     if($utilisateurConnecte) {
 
-        $requete = $bdd->prepare("DELETE FROM article WHERE id = :id");
+        if($utilisateurConnecte['admin'] == 1) {
 
-        $requete->execute(["id" => $_GET['id']]);
+            $requete = $bdd->prepare("DELETE FROM article WHERE id = :id");
 
-        // echo '{"message" => "L\'article a bien été supprimé"}';
-        echo json_encode(["message" => "L'article a bien été supprimé"]);
+            $requete->execute(["id" => $_GET['id']]);
 
+            // echo '{"message" => "L\'article a bien été supprimé"}';
+            echo json_encode(["message" => "L'article a bien été supprimé"]);
+        } else {
+            echo json_encode(["message" => "Vous n'avez pas les droits nécessaires"]);
+        }
     } else {
 
         echo json_encode(["message" => "Ce compte n'existe plus"]);
