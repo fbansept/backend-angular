@@ -7,17 +7,21 @@ $donneesFormulaire = json_decode($json, TRUE);
 
 try{
 
-    include 'bdd.php';
+    include 'authentification.php';
 
-    $requete = $bdd->prepare("INSERT INTO article (nom, contenu, date)
-                                VALUES (:nom, :contenu,  NOW() )");
+    if($utilisateurConnecte) {
 
-    $requete->execute([
-        "nom" => $donneesFormulaire["nom"],
-        "contenu" => $donneesFormulaire["contenu"]
-    ]);
+        $requete = $bdd->prepare("INSERT INTO article (nom, contenu, date)
+                                    VALUES (:nom, :contenu,  NOW() )");
 
-    echo '{"message" : "L\'article a été ajouté"}';
+        $requete->execute([
+            "nom" => $donneesFormulaire["nom"],
+            "contenu" => $donneesFormulaire["contenu"]
+        ]);
+
+        echo '{"message" : "L\'article a été ajouté"}';
+
+    }
 
 } catch (PDOException $e) {
     echo 'Echec de la connexion : ' . $e->getMessage();
