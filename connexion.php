@@ -11,17 +11,18 @@ try{
 
     $requete = $bdd->prepare("SELECT * 
                                 FROM utilisateur 
-                                WHERE email = :email 
-                                AND password = :password");
+                                WHERE email = :email");
 
     $requete->execute([
-        "email" => $donneesFormulaire["email"],
-        "password" => $donneesFormulaire["password"]
+        "email" => $donneesFormulaire["email"]
     ]);
 
     $utilisateur = $requete->fetch();
 
-    if($utilisateur) {
+    if($utilisateur && password_verify(
+        $donneesFormulaire["password"],
+        $utilisateur['password'])
+    ) {
        
         // Étape 1 : Créer le Header
         $header = json_encode([
